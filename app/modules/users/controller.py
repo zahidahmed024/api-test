@@ -8,3 +8,8 @@ router = APIRouter()
 @router.post("/", response_model=schemas.User)
 async def create_user(user: schemas.UserCreate, db: AsyncSession = Depends(get_db)):
     return await crud.create_user(db, user)
+
+
+@router.get("/", response_model=list[schemas.User])
+async def read_users(skip: int = 0, limit: int = 10, db: AsyncSession = Depends(get_db)):
+    return await crud.get_users(db, skip=skip, limit=limit)
